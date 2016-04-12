@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="virustotally">
+<head>
+  <title>Hello TypeScript</title>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/marked/lib/marked.js"></script>
+  <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+  <script src="controllers.js"></script>
+  <style>
+@import url(http://fonts.googleapis.com/css?family=Lora);
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 5px solid rgb(42, 42, 42);
+  background-color: rgba(24, 24, 24, .7);
+  box-shadow: 0 0 8px 3px #000 inset;
+  -webkit-user-select: none;
+  height: 280px;
+}
+
+.main {
+  font-family: "Iceland";
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 9px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.handle {
+  -webkit-app-region: drag;
+  background-color: rgba(200, 200, 200, .7);
+  height: 5%;
+}
+
+.drop {
+  top: 10px;
+  height: 50%;
+}
+
+.result {
+　　bottom: 0px;
+  margin:0 auto;
+  padding-bottom: 12px;
+  width: 95%;
+  height: 40%; 
+  font-size: 12px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body ng-controller="MainController as main" class="main">
+  <div class="handle"></div>
+  <div ng-model="files" ngf-drop ngf-select ngf-multiple="true" ngf-allow-dir="true" class="drop">
+Drag'n Drop Here!!!
+  </div>
+  <div class="result">
+  <dl>
+    <dt ng-repeat-start="file in main.files">{{file.name | pathToName}}</dt>
+      <dd ng-repeat-end>
+        <a href="#" ng-if="!file.finished" ng-click="main.report(file.sha256)">[ Check! ]</a>
+        <a href="#" ng-if="file.finished" ng-click="main.openVT(file.result_url)">{{file.result}}</span>
+      </dd>
+    </dl>
+  </div>
+</body>
+</html>
+
