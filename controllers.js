@@ -3,17 +3,19 @@
 var fs = require('fs');
 var path = require('path');
 var virustotal = require('./virustotal.js');
+var settings = require('./settings.js');
 var shell = require('shell');
+
+var settingsFile = "./settings.json";
 
 var ngModule = angular.module('virustotally', [
   'ngFileUpload'
 ]);
 
-virustotal.setApiKey('0ec5d33f3ff9d1bce61dab3a5a67fce30623d3649c61cf7f2ebc7c51de3135f9');
-
 ngModule.controller('MainController', function ($scope) {
   var main = this;
-  main.text = "";
+  main.settings = settings.getSettings(settingsFile, { apikey: '', });
+  virustotal.setApiKey(main.settings.apikey);alert(main.settings.apikey);
   main.files = [];
   main.fileDrop = function ($files) {
     if($files == undefined || 'length' in $files === false) {
